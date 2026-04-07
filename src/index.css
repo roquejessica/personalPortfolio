@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap');
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -21,10 +23,10 @@
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: #0a0f1e;
   }
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(#a855f7, #3b82f6);
@@ -38,6 +40,8 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradient-shift 4s ease infinite;
   }
 
   .bg-glass {
@@ -64,7 +68,21 @@
   }
 }
 
-/* Particle canvas */
+/* ── Mouse-follow cursor glow ── */
+#cursor-glow {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  transition: left 0.12s ease, top 0.12s ease;
+  will-change: left, top;
+}
+
+/* ── Particle canvas ── */
 #particles {
   position: fixed;
   top: 0;
@@ -75,11 +93,12 @@
   z-index: 0;
 }
 
-/* Section fade-in on scroll */
+/* ── Reveal animations with stagger ── */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(50px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.visible {
@@ -87,7 +106,22 @@
   transform: translateY(0);
 }
 
-/* Nav */
+/* Stagger children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.05s; }
+.reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
+.reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.19s; }
+.reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.26s; }
+.reveal-stagger.visible > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.33s; }
+.reveal-stagger.visible > *:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.40s; }
+
+/* ── Nav ── */
 .nav-link {
   position: relative;
   color: #94a3b8;
@@ -104,7 +138,7 @@
   width: 0;
   height: 2px;
   background: linear-gradient(90deg, #a855f7, #3b82f6);
-  transition: width 0.3s;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 2px;
 }
 
@@ -112,11 +146,16 @@
   color: #f1f5f9;
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
-/* Button */
+.nav-link.active {
+  color: #f1f5f9;
+}
+
+/* ── Buttons ── */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -129,7 +168,7 @@
   color: white;
   cursor: pointer;
   border: none;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
 }
@@ -148,8 +187,12 @@
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(168, 85, 247, 0.45);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px) scale(0.99);
 }
 
 .btn-primary > * {
@@ -169,17 +212,37 @@
   color: #c4b5fd;
   cursor: pointer;
   background: transparent;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-outline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(59,130,246,0.15));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-outline:hover::before {
+  opacity: 1;
 }
 
 .btn-outline:hover {
-  background: rgba(168, 85, 247, 0.1);
   border-color: #a855f7;
   color: #fff;
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
 }
 
-/* Input */
+.btn-outline > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Input ── */
 .input-field {
   width: 100%;
   background: rgba(255, 255, 255, 0.04);
@@ -203,7 +266,7 @@
   box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
 }
 
-/* Tag badge */
+/* ── Tag badge ── */
 .tag {
   display: inline-block;
   padding: 0.25rem 0.75rem;
@@ -213,9 +276,15 @@
   font-size: 0.75rem;
   color: #c4b5fd;
   font-family: 'Fira Code', monospace;
+  transition: all 0.2s;
 }
 
-/* Animated gradient border */
+.tag:hover {
+  background: rgba(168, 85, 247, 0.2);
+  border-color: rgba(168, 85, 247, 0.5);
+}
+
+/* ── Animated gradient border ── */
 .gradient-border {
   position: relative;
   border-radius: 1rem;
@@ -224,15 +293,15 @@
 .gradient-border::before {
   content: '';
   position: absolute;
-  inset: -1px;
+  inset: -2px;
   background: linear-gradient(135deg, #a855f7, #3b82f6, #06b6d4, #a855f7);
-  background-size: 200% 200%;
+  background-size: 300% 300%;
   border-radius: inherit;
   z-index: -1;
   animation: gradient 4s ease infinite;
 }
 
-/* Hero typing cursor */
+/* ── Hero typing cursor ── */
 .cursor {
   display: inline-block;
   width: 3px;
@@ -249,7 +318,7 @@
   50% { opacity: 0; }
 }
 
-/* Toast notification */
+/* ── Toast notification ── */
 .toast {
   position: fixed;
   bottom: 2rem;
@@ -261,7 +330,7 @@
   z-index: 1000;
   transform: translateY(100px);
   opacity: 0;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .toast.show {
@@ -280,3 +349,102 @@
   color: white;
   box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
 }
+
+/* ── Shimmer effect ── */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+  animation: shimmer 2.5s infinite;
+}
+
+/* ── Skill bar ── */
+.skill-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  width: 0%;
+  transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skill-bar-fill.animated {
+  /* width set by JS inline style */
+}
+
+/* ── Float badges ── */
+.float-badge {
+  animation: float 3s ease-in-out infinite;
+}
+
+.float-badge-2 {
+  animation: float 3s ease-in-out 1.5s infinite;
+}
+
+/* ── Section divider ── */
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #a855f7, #3b82f6);
+  border-radius: 9999px;
+  margin: 0 auto 1rem;
+}
+
+/* ── Keyframes ── */
+@keyframes gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  100% { left: 200%; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.5); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 12s linear infinite; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-gradient { animation: gradient 4s ease infinite; }

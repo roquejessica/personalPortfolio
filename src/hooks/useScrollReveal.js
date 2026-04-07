@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 export default function useScrollReveal() {
   useEffect(() => {
-    const els = document.querySelectorAll('.reveal');
+    const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -12,10 +12,10 @@ export default function useScrollReveal() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
     );
 
-    els.forEach((el) => observer.observe(el));
-    return () => els.forEach((el) => observer.unobserve(el));
+    revealEls.forEach((el) => observer.observe(el));
+    return () => revealEls.forEach((el) => observer.unobserve(el));
   }, []);
 }

@@ -1,17 +1,38 @@
 import React from 'react';
 
+const details = [
+  { label: 'Name', value: 'Jessica Roque' },
+  { label: 'Focus', value: 'Web & Software Dev' },
+  { label: 'Location', value: 'Philippines 🇵🇭' },
+  { label: 'Status', value: 'Open to Opportunities' },
+];
+
 export default function About() {
   return (
     <section id="about" className="py-28 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
+
           {/* Avatar side */}
           <div className="reveal flex justify-center">
             <div className="relative">
               {/* Rotating ring */}
-              <div className="absolute inset-0 rounded-full border-2 border-dashed border-purple-500/30 animate-spin-slow" style={{ margin: '-20px' }} />
+              <div
+                className="absolute rounded-full border-2 border-dashed border-purple-500/30 animate-spin-slow pointer-events-none"
+                style={{ inset: '-24px' }}
+              />
+              {/* Second ring counter-rotate */}
+              <div
+                className="absolute rounded-full border border-blue-500/20 pointer-events-none"
+                style={{
+                  inset: '-40px',
+                  animation: 'spin-slow 20s linear infinite reverse',
+                }}
+              />
+
               {/* Glow */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 blur-xl" />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/25 to-blue-500/25 blur-2xl" />
+
               {/* Avatar */}
               <div className="relative w-64 h-64 rounded-2xl gradient-border overflow-hidden">
                 <img
@@ -19,13 +40,15 @@ export default function About() {
                   alt="Jessica Roque"
                   className="w-full h-full object-cover object-top"
                 />
+                {/* Shimmer */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
               </div>
 
               {/* Floating chips */}
-              <div className="absolute -top-4 -right-4 bg-glass px-3 py-1.5 rounded-lg text-xs font-mono text-purple-300 border border-purple-500/20 animate-float">
-                👨‍💻 IT Student
+              <div className="float-badge absolute -top-6 -right-6 bg-glass px-3 py-2 rounded-xl text-xs font-mono text-purple-300 border border-purple-500/20 shadow-lg shadow-purple-900/20 whitespace-nowrap">
+                👩‍💻 IT Professional
               </div>
-              <div className="absolute -bottom-4 -left-4 bg-glass px-3 py-1.5 rounded-lg text-xs font-mono text-cyan-300 border border-cyan-500/20 animate-float" style={{ animationDelay: '2s' }}>
+              <div className="float-badge-2 absolute -bottom-6 -left-6 bg-glass px-3 py-2 rounded-xl text-xs font-mono text-cyan-300 border border-cyan-500/20 shadow-lg shadow-cyan-900/20 whitespace-nowrap">
                 🚀 Always Learning
               </div>
             </div>
@@ -34,6 +57,7 @@ export default function About() {
           {/* Text side */}
           <div className="reveal">
             <p className="text-purple-400 font-mono text-sm mb-3">// about me</p>
+            <div className="section-divider mb-0" style={{ margin: '0 0 1rem 0' }} />
             <h2 className="text-4xl md:text-5xl font-black mb-6">
               Who Am <span className="text-gradient">I?</span>
             </h2>
@@ -49,16 +73,14 @@ export default function About() {
             </p>
 
             {/* Details grid */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              {[
-                { label: 'Name', value: 'Jessica Roque' },
-                { label: 'Focus', value: 'Web & Software Dev' },
-                { label: 'Location', value: 'Philippines 🇵🇭' },
-                { label: 'Status', value: 'Open to Opportunities' },
-              ].map((item) => (
-                <div key={item.label} className="bg-glass rounded-xl p-3 border border-white/5">
-                  <p className="text-xs text-slate-500 mb-0.5">{item.label}</p>
-                  <p className="text-sm font-semibold text-slate-200">{item.value}</p>
+            <div className="grid grid-cols-2 gap-3 mb-8 reveal-stagger">
+              {details.map((item) => (
+                <div
+                  key={item.label}
+                  className="bg-glass rounded-xl p-3.5 border border-white/5 hover:border-purple-500/20 hover:bg-purple-500/5 transition-all duration-300 group cursor-default"
+                >
+                  <p className="text-xs text-slate-500 mb-0.5 font-mono">{item.label}</p>
+                  <p className="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors">{item.value}</p>
                 </div>
               ))}
             </div>
