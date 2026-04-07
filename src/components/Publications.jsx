@@ -1,4 +1,5 @@
 import React from 'react';
+import ScatterText from './ScatterText';
 
 const publications = [
   {
@@ -11,7 +12,7 @@ const publications = [
     tags: ['Laravel', 'EdTech', 'Web Systems'],
     doi: '10.54536/ajiri.v5i1.7077',
     type: 'Research Paper',
-    gradient: 'from-cyan-500 to-teal-500',
+    gradient: 'from-teal-500 to-cyan-500',
   },
 ];
 
@@ -21,10 +22,15 @@ export default function Publications() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="reveal text-center mb-16">
-          <p className="text-purple-400 font-mono text-sm mb-3">// academic work</p>
-          <h2 className="text-4xl md:text-5xl font-black mb-4">
-            Research & <span className="text-gradient">Publications</span>
-          </h2>
+          <p className="text-rose-400 font-mono text-sm mb-3">// academic work</p>
+          <ScatterText
+            tag="h2"
+            className="text-4xl md:text-5xl font-black mb-4"
+            segments={[
+              { text: 'Research & ' },
+              { text: 'Publications', className: 'text-rose-400' },
+            ]}
+          />
           <p className="text-slate-400 max-w-xl mx-auto">
             My academic contributions — spanning research papers, theses, and symposium presentations.
           </p>
@@ -45,7 +51,7 @@ function PubCard({ pub, index }) {
   return (
     <div
       id={pub.id}
-      className="reveal group bg-glass rounded-2xl p-6 md:p-8 border border-white/5 hover:border-purple-500/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-purple-900/20"
+      className="reveal group bg-glass rounded-2xl p-6 md:p-8 border border-white/5 hover:border-rose-500/25 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-rose-900/10"
     >
       <div className="flex flex-col md:flex-row md:items-start gap-6">
         {/* Number */}
@@ -62,10 +68,10 @@ function PubCard({ pub, index }) {
             <span className="text-xs text-slate-500 font-mono">{pub.year}</span>
           </div>
 
-          <h3 className="text-lg font-bold text-white mb-2 group-hover:text-gradient transition-all duration-300 leading-snug">
+          <h3 className="text-lg font-bold text-white mb-2 group-hover:text-rose-300 transition-all duration-300 leading-snug">
             {pub.title}
           </h3>
-          <p className="text-sm text-purple-300 font-medium mb-1">{pub.authors}</p>
+          <p className="text-sm text-rose-300 font-medium mb-1">{pub.authors}</p>
           <p className="text-xs text-slate-500 italic mb-4">{pub.venue}</p>
           <p className="text-sm text-slate-400 leading-relaxed mb-4">{pub.abstract}</p>
 
@@ -75,7 +81,7 @@ function PubCard({ pub, index }) {
             ))}
             <a
               href={pub.doi}
-              className="ml-auto flex items-center gap-1.5 text-xs text-purple-400 hover:text-purple-300 transition-colors font-medium"
+              className="ml-auto flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 transition-colors font-medium"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

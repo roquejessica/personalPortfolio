@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import ScatterText from './ScatterText';
 
 const EMAILJS_SERVICE_ID = 'service_2n9nox5';
 const EMAILJS_TEMPLATE_ID = 'template_xf00rzq';
@@ -55,10 +56,15 @@ export default function Contact() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="reveal text-center mb-16">
-          <p className="text-purple-400 font-mono text-sm mb-3">// get in touch</p>
-          <h2 className="text-4xl md:text-5xl font-black mb-4">
-            Send Me a <span className="text-gradient">Message</span>
-          </h2>
+          <p className="text-rose-400 font-mono text-sm mb-3">// get in touch</p>
+          <ScatterText
+            tag="h2"
+            className="text-4xl md:text-5xl font-black mb-4"
+            segments={[
+              { text: 'Send Me a ' },
+              { text: 'Message', className: 'text-rose-400' },
+            ]}
+          />
           <p className="text-slate-400 max-w-xl mx-auto">
             Have a project idea, want to collaborate, or just want to say hi?
             Fill out the form below and it lands directly in my inbox.
@@ -109,13 +115,13 @@ export default function Contact() {
                 },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3 mb-4 last:mb-0">
-                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 flex-shrink-0">
                     {item.icon}
                   </div>
                   <div>
                     <p className="text-xs text-slate-500">{item.label}</p>
                     {item.href ? (
-                      <a href={item.href} className="text-sm text-slate-200 hover:text-purple-300 transition-colors">{item.value}</a>
+                      <a href={item.href} className="text-sm text-slate-200 hover:text-rose-300 transition-colors">{item.value}</a>
                     ) : (
                       <p className="text-sm text-slate-200">{item.value}</p>
                     )}
@@ -125,7 +131,7 @@ export default function Contact() {
             </div>
 
             {/* Availability card */}
-            <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-2xl p-5 border border-purple-500/20">
+            <div className="bg-gradient-to-r from-rose-500/10 to-teal-500/10 rounded-2xl p-5 border border-rose-500/20">
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-green-400 font-semibold text-sm">Available for work</span>

@@ -1,8 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '../App';
 
 const navLinks = ['Home', 'About', 'Projects', 'Publications', 'Skills', 'Contact'];
 
+/* Sun icon */
+function SunIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+    </svg>
+  );
+}
+
+/* Moon icon */
+function MoonIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
+  );
+}
+
 export default function Navbar() {
+  const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -10,8 +32,6 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 40);
-
-      // Track which section is in view
       const sections = navLinks.map((l) => l.toLowerCase());
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i]);
@@ -33,9 +53,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-glass shadow-2xl shadow-purple-900/10 py-3'
-          : 'bg-transparent py-5'
+        scrolled ? 'bg-glass shadow-2xl shadow-rose-900/10 py-3' : 'bg-transparent py-5'
       }`}
       style={{ backdropFilter: scrolled ? 'blur(24px)' : 'none' }}
     >
@@ -46,10 +64,10 @@ export default function Navbar() {
           onClick={(e) => { e.preventDefault(); scrollTo('home'); }}
           className="flex items-center gap-2 group"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform duration-300">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-500 to-teal-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-rose-500/30 group-hover:scale-110 transition-transform duration-300">
             &lt;/&gt;
           </div>
-          <span className="font-bold text-white text-lg tracking-tight">
+          <span className="font-bold text-lg tracking-tight" style={{ color: 'var(--text-primary)' }}>
             Jessica<span className="text-gradient">Roque</span>
           </span>
         </a>
@@ -68,34 +86,56 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* CTA */}
-        <a
-          href="#contact"
-          onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
-          className="hidden md:flex btn-primary text-sm py-2 px-5"
-        >
-          <span>Hire Me</span>
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </a>
+        {/* Right: theme toggle + CTA */}
+        <div className="hidden md:flex items-center gap-3">
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            className="theme-toggle"
+            aria-label="Toggle light/dark mode"
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+          </button>
 
-        {/* Hamburger */}
-        <button
-          className="md:hidden text-slate-300 hover:text-white transition-colors"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          {/* Hire Me */}
+          <a
+            href="#contact"
+            onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
+            className="btn-primary text-sm py-2 px-5"
+          >
+            <span>Hire Me</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-          ) : (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
-        </button>
+          </a>
+        </div>
+
+        {/* Mobile: theme toggle + hamburger */}
+        <div className="md:hidden flex items-center gap-2">
+          <button
+            onClick={toggleTheme}
+            className="theme-toggle"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+          </button>
+          <button
+            className="text-slate-300 hover:text-white transition-colors p-1"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu */}

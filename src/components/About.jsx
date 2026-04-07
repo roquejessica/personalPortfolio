@@ -1,4 +1,6 @@
 import React from 'react';
+import RotatingCube from './RotatingCube';
+import ScatterText from './ScatterText';
 
 const details = [
   { label: 'Name', value: 'Jessica Roque' },
@@ -13,42 +15,22 @@ export default function About() {
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
 
-          {/* Avatar side */}
+          {/* Cube side */}
           <div className="reveal flex justify-center">
-            <div className="relative">
-              {/* Rotating ring */}
-              <div
-                className="absolute rounded-full border-2 border-dashed border-purple-500/30 animate-spin-slow pointer-events-none"
-                style={{ inset: '-24px' }}
-              />
-              {/* Second ring counter-rotate */}
-              <div
-                className="absolute rounded-full border border-blue-500/20 pointer-events-none"
-                style={{
-                  inset: '-40px',
-                  animation: 'spin-slow 20s linear infinite reverse',
-                }}
-              />
+            <div className="relative flex items-center justify-center">
 
-              {/* Glow */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/25 to-blue-500/25 blur-2xl" />
+              {/* Ambient glow behind cube */}
+              <div className="absolute w-72 h-72 rounded-full bg-rose-500/15 blur-3xl pointer-events-none" />
+              <div className="absolute w-56 h-56 rounded-full bg-teal-500/10 blur-2xl pointer-events-none" style={{ transform: 'translate(30px, 20px)' }} />
 
-              {/* Avatar */}
-              <div className="relative w-64 h-64 rounded-2xl gradient-border overflow-hidden">
-                <img
-                  src="/images/myID.png"
-                  alt="Jessica Roque"
-                  className="w-full h-full object-cover object-top"
-                />
-                {/* Shimmer */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
-              </div>
+              {/* The rotating cube */}
+              <RotatingCube imageSrc="/images/myID.png" size={300} />
 
               {/* Floating chips */}
-              <div className="float-badge absolute -top-6 -right-6 bg-glass px-3 py-2 rounded-xl text-xs font-mono text-purple-300 border border-purple-500/20 shadow-lg shadow-purple-900/20 whitespace-nowrap">
+              <div className="float-badge absolute -top-4 -right-2 bg-glass px-3 py-2 rounded-xl text-xs font-mono text-rose-300 border border-rose-500/20 shadow-lg shadow-rose-900/20 whitespace-nowrap z-10">
                 👩‍💻 IT Professional
               </div>
-              <div className="float-badge-2 absolute -bottom-6 -left-6 bg-glass px-3 py-2 rounded-xl text-xs font-mono text-cyan-300 border border-cyan-500/20 shadow-lg shadow-cyan-900/20 whitespace-nowrap">
+              <div className="float-badge-2 absolute -bottom-4 -left-2 bg-glass px-3 py-2 rounded-xl text-xs font-mono text-teal-300 border border-teal-500/20 shadow-lg shadow-teal-900/20 whitespace-nowrap z-10">
                 🚀 Always Learning
               </div>
             </div>
@@ -56,11 +38,16 @@ export default function About() {
 
           {/* Text side */}
           <div className="reveal">
-            <p className="text-purple-400 font-mono text-sm mb-3">// about me</p>
+            <p className="text-rose-400 font-mono text-sm mb-3">// about me</p>
             <div className="section-divider mb-0" style={{ margin: '0 0 1rem 0' }} />
-            <h2 className="text-4xl md:text-5xl font-black mb-6">
-              Who Am <span className="text-gradient">I?</span>
-            </h2>
+            <ScatterText
+              tag="h2"
+              className="text-4xl md:text-5xl font-black mb-6"
+              segments={[
+                { text: 'Who Am ' },
+                { text: 'I?', className: 'text-rose-400' },
+              ]}
+            />
             <p className="text-slate-400 leading-relaxed mb-4">
               I'm a passionate tech professional with a strong focus on web development, software
               engineering, and emerging technologies. I thrive on transforming complex problems into
@@ -77,7 +64,7 @@ export default function About() {
               {details.map((item) => (
                 <div
                   key={item.label}
-                  className="bg-glass rounded-xl p-3.5 border border-white/5 hover:border-purple-500/20 hover:bg-purple-500/5 transition-all duration-300 group cursor-default"
+                  className="bg-glass rounded-xl p-3.5 border border-white/5 hover:border-rose-500/20 hover:bg-rose-500/5 transition-all duration-300 group cursor-default"
                 >
                   <p className="text-xs text-slate-500 mb-0.5 font-mono">{item.label}</p>
                   <p className="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors">{item.value}</p>
@@ -86,7 +73,6 @@ export default function About() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              {/* LinkedIn */}
               <a
                 id="about-linkedin"
                 href="https://www.linkedin.com/in/jessica-roque-aaa0b3151"
@@ -99,8 +85,6 @@ export default function About() {
                 </svg>
                 <span>LinkedIn</span>
               </a>
-
-              {/* GitHub */}
               <a
                 id="about-github"
                 href="https://github.com/roquejessica"
@@ -113,8 +97,6 @@ export default function About() {
                 </svg>
                 <span>GitHub</span>
               </a>
-
-              {/* Publication */}
               <a
                 id="about-publication"
                 href="https://www.researchgate.net/publication/401703874_LAMMS_A_Learner's_Attendance_Monitoring_and_Management_System_for_Naawan_Central_School_Misamis_Oriental_Philippines"

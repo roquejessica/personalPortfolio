@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import ScatterText from './ScatterText';
 
 /* ─── Project data ─── */
 const projects = [
@@ -377,7 +378,7 @@ function ProjectCard({ project, onOpen }) {
             )}
           </div>
 
-          <h3 className="text-base font-bold text-white mb-1.5 group-hover:text-gradient transition-all duration-300">
+          <h3 className="text-base font-bold text-white mb-1.5 group-hover:text-rose-300 transition-all duration-300">
             {project.title}
           </h3>
           <p className="text-slate-400 text-xs leading-relaxed mb-4">
@@ -437,7 +438,14 @@ export default function Projects() {
           <p className="text-purple-400 font-mono text-sm mb-3">// my work</p>
           <div className="section-divider" />
           <h2 className="text-4xl md:text-5xl font-black mb-4">
-            Featured <span className="text-gradient">Projects</span>
+            <ScatterText
+              tag="h2"
+              className="text-4xl md:text-5xl font-black mb-4"
+              segments={[
+                { text: 'Featured ' },
+                { text: 'Projects', className: 'text-rose-400' },
+              ]}
+            />
           </h2>
           <p className="text-slate-400 max-w-xl mx-auto">
             Click any card to explore screenshots, features, and details.

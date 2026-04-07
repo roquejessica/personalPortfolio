@@ -1,4 +1,5 @@
 import React from 'react';
+import ScatterText from './ScatterText';
 
 const socials = [
   {
@@ -92,10 +93,15 @@ export default function Socials() {
     <section id="socials" className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="reveal text-center mb-12">
-          <p className="text-purple-400 font-mono text-sm mb-3">// let's connect</p>
-          <h2 className="text-3xl md:text-4xl font-black mb-3">
-            Find Me <span className="text-gradient">Online</span>
-          </h2>
+          <p className="text-rose-400 font-mono text-sm mb-3">// let's connect</p>
+          <ScatterText
+            tag="h2"
+            className="text-3xl md:text-4xl font-black mb-3"
+            segments={[
+              { text: 'Find Me ' },
+              { text: 'Online', className: 'text-rose-400' },
+            ]}
+          />
           <p className="text-slate-400 max-w-lg mx-auto text-sm">
             Reach out on any platform — I'm always happy to connect, collaborate, or just chat tech!
           </p>
@@ -116,10 +122,10 @@ export default function Socials() {
               </div>
               <div>
                 <p className="font-bold text-white text-sm">{social.name}</p>
-                <p className="text-purple-300 text-xs font-mono mt-0.5">{social.handle}</p>
+                <p className="text-rose-300 text-xs font-mono mt-0.5">{social.handle}</p>
                 <p className="text-slate-500 text-xs mt-1 leading-tight">{social.desc}</p>
               </div>
-              <div className="flex items-center gap-1 text-xs text-slate-600 group-hover:text-purple-400 transition-colors mt-auto">
+              <div className="flex items-center gap-1 text-xs text-slate-600 group-hover:text-rose-400 transition-colors mt-auto">
                 <span>Visit</span>
                 <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

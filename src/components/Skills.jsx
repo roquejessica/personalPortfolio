@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import ScatterText from './ScatterText';
 
 const skillGroups = [
   {
     category: 'Frontend',
     icon: '🎨',
-    gradient: 'from-purple-500 to-pink-500',
-    bar: 'linear-gradient(90deg, #a855f7, #ec4899)',
+    gradient: 'from-rose-500 to-pink-500',
+    bar: 'linear-gradient(90deg, #f43f5e, #ec4899)',
     skills: [
       { name: 'React', level: 85 },
       { name: 'Tailwind CSS', level: 90 },
@@ -17,8 +18,8 @@ const skillGroups = [
   {
     category: 'Backend',
     icon: '⚙️',
-    gradient: 'from-blue-500 to-cyan-500',
-    bar: 'linear-gradient(90deg, #3b82f6, #06b6d4)',
+    gradient: 'from-teal-500 to-cyan-500',
+    bar: 'linear-gradient(90deg, #0d9488, #06b6d4)',
     skills: [
       { name: 'Laravel / PHP', level: 80 },
       { name: 'Node.js', level: 65 },
@@ -30,8 +31,8 @@ const skillGroups = [
   {
     category: 'Dev Tools & Others',
     icon: '🛠️',
-    gradient: 'from-green-500 to-teal-500',
-    bar: 'linear-gradient(90deg, #22c55e, #14b8a6)',
+    gradient: 'from-amber-500 to-orange-500',
+    bar: 'linear-gradient(90deg, #f59e0b, #f97316)',
     skills: [
       { name: 'Git & GitHub', level: 85 },
       { name: 'Vite / Webpack', level: 72 },
@@ -65,7 +66,7 @@ function SkillGroup({ group }) {
   return (
     <div
       ref={ref}
-      className="reveal bg-glass rounded-2xl p-6 border border-white/5 hover:border-purple-500/25 transition-all duration-500 hover:shadow-xl hover:shadow-purple-900/20 group"
+      className="reveal bg-glass rounded-2xl p-6 border border-white/5 hover:border-rose-500/20 transition-all duration-500 hover:shadow-xl hover:shadow-rose-900/10 group"
     >
       <div className="flex items-center gap-3 mb-6">
         <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${group.gradient} flex items-center justify-center text-xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
@@ -102,33 +103,35 @@ export default function Skills() {
   return (
     <section id="skills" className="py-28 px-6">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <div className="reveal text-center mb-16">
-          <p className="text-purple-400 font-mono text-sm mb-3">// tech stack</p>
+          <p className="text-rose-400 font-mono text-sm mb-3">// tech stack</p>
           <div className="section-divider" />
-          <h2 className="text-4xl md:text-5xl font-black mb-4">
-            Skills &amp; <span className="text-gradient">Technologies</span>
-          </h2>
+          <ScatterText
+            tag="h2"
+            className="text-4xl md:text-5xl font-black mb-4"
+            segments={[
+              { text: 'Skills & ' },
+              { text: 'Technologies', className: 'text-rose-400' },
+            ]}
+          />
           <p className="text-slate-400 max-w-xl mx-auto">
             My toolkit — constantly evolving as I learn and build.
           </p>
         </div>
 
-        {/* Skill groups */}
         <div className="grid md:grid-cols-3 gap-6 mb-12">
           {skillGroups.map((group) => (
             <SkillGroup key={group.category} group={group} />
           ))}
         </div>
 
-        {/* Tools strip */}
         <div className="reveal bg-glass rounded-2xl p-8 border border-white/5">
           <p className="text-xs text-slate-500 font-mono mb-6 text-center">// other tools i use daily</p>
           <div className="flex flex-wrap gap-3 justify-center reveal-stagger">
             {tools.map((tool) => (
               <span
                 key={tool}
-                className="px-4 py-2 rounded-xl bg-white/5 text-slate-300 text-sm border border-white/8 hover:border-purple-500/40 hover:text-white hover:bg-purple-500/10 hover:-translate-y-1 hover:shadow-md hover:shadow-purple-900/20 transition-all duration-200 cursor-default font-medium"
+                className="px-4 py-2 rounded-xl bg-white/5 text-slate-300 text-sm border border-white/8 hover:border-rose-500/35 hover:text-white hover:bg-rose-500/8 hover:-translate-y-1 hover:shadow-md hover:shadow-rose-900/15 transition-all duration-200 cursor-default font-medium"
               >
                 {tool}
               </span>

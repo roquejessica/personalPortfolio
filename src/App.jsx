@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, createContext, useContext } from 'react';
 import './index.css';
 
 import Navbar from './components/Navbar';
@@ -11,6 +11,10 @@ import Socials from './components/Socials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import useScrollReveal from './hooks/useScrollReveal';
+
+/* ── Theme context ── */
+export const ThemeContext = createContext({ theme: 'dark', toggleTheme: () => {} });
+export const useTheme = () => useContext(ThemeContext);
 
 /* ── Mouse-follow cursor glow ── */
 function CursorGlow() {
@@ -29,7 +33,7 @@ function CursorGlow() {
 }
 
 /* ── Floating particles ── */
-function Particles() {
+function Particles({ theme }) {
   useEffect(() => {
     const canvas = document.getElementById('particles');
     if (!canvas) return;
@@ -42,15 +46,16 @@ function Particles() {
     resize();
     window.addEventListener('resize', resize);
 
-    const PARTICLE_COUNT = 60;
+    const isDark = theme === 'dark';
+    const PARTICLE_COUNT = 55;
     const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       r: Math.random() * 1.5 + 0.3,
       dx: (Math.random() - 0.5) * 0.3,
       dy: (Math.random() - 0.5) * 0.3,
-      alpha: Math.random() * 0.5 + 0.1,
-      color: Math.random() > 0.5 ? '168,85,247' : '59,130,246',
+      alpha: Math.random() * (isDark ? 0.5 : 0.25) + (isDark ? 0.1 : 0.05),
+      color: Math.random() > 0.5 ? '244,63,94' : '13,148,136',
     }));
 
     let frame;
@@ -64,12 +69,12 @@ function Particles() {
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
 
-        // draw lines between close particles
         particles.forEach((q) => {
           const dist = Math.hypot(p.x - q.x, p.y - q.y);
           if (dist < 120) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(168,85,247,${0.06 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(244,63,94,${isDark ? 0.06 : 0.03} * (1 - dist / 120))`;
+            ctx.strokeStyle = `rgba(244,63,94,${(isDark ? 0.06 : 0.03) * (1 - dist / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
@@ -90,45 +95,62 @@ function Particles() {
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
     };
-  }, []);
+  }, [theme]);
 
   return <canvas id="particles" />;
 }
 
 export default function App() {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('jrTheme') || 'dark';
+  });
+
+  // Apply theme to <html> element
+  useEffect(() => {
+    const html = document.documentElement;
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('jrTheme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+
   useScrollReveal();
 
+  const isDark = theme === 'dark';
+
   return (
-    <div className="relative min-h-screen">
-      <CursorGlow />
-      <Particles />
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <div className="relative min-h-screen">
+        <CursorGlow />
+        <Particles theme={theme} />
 
-      {/* Ambient grid background */}
-      <div
-        className="fixed inset-0 z-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(168, 85, 247, 0.025) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(168, 85, 247, 0.025) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
-        }}
-      />
+        {/* Ambient grid background */}
+        <div
+          className="fixed inset-0 z-0 pointer-events-none"
+          style={{
+            backgroundImage: `
+              linear-gradient(var(--grid-color) 1px, transparent 1px),
+              linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+          }}
+        />
 
-      {/* Content */}
-      <div className="relative z-10">
-        <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Projects />
-          <Publications />
-          <Skills />
-          <Socials />
-          <Contact />
-        </main>
-        <Footer />
+        {/* Content */}
+        <div className="relative z-10">
+          <Navbar />
+          <main>
+            <Hero />
+            <About />
+            <Projects />
+            <Publications />
+            <Skills />
+            <Socials />
+            <Contact />
+          </main>
+          <Footer />
+        </div>
       </div>
-    </div>
+    </ThemeContext.Provider>
   );
 }

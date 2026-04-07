@@ -14,7 +14,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold text-sm">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-500 to-teal-600 flex items-center justify-center text-white font-bold text-sm">
                 &lt;/&gt;
               </div>
               <span className="font-bold text-white text-lg">Dev<span className="text-gradient">Port</span></span>
@@ -54,7 +54,7 @@ export default function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-white/5 text-slate-400 hover:text-white hover:bg-purple-500/20 text-xs transition-all duration-200 border border-white/10 hover:border-purple-500/30"
+                  className="px-3 py-1.5 rounded-lg bg-white/5 text-slate-400 hover:text-white hover:bg-rose-500/15 text-xs transition-all duration-200 border border-white/10 hover:border-rose-500/30"
                 >
                   {s.label}
                 </a>

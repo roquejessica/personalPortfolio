@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -12,10 +13,9 @@ export default {
       },
       colors: {
         brand: {
-          purple: '#a855f7',
-          blue: '#3b82f6',
-          cyan: '#06b6d4',
-          pink: '#ec4899',
+          rose: '#f43f5e',
+          teal: '#0d9488',
+          amber: '#f59e0b',
         },
       },
       animation: {
@@ -32,8 +32,8 @@ export default {
           '50%': { transform: 'translateY(-20px)' },
         },
         glow: {
-          from: { boxShadow: '0 0 20px #a855f7' },
-          to: { boxShadow: '0 0 40px #3b82f6, 0 0 80px #a855f780' },
+          from: { boxShadow: '0 0 20px #f43f5e' },
+          to: { boxShadow: '0 0 40px #0d9488, 0 0 80px #f43f5e80' },
         },
         slideUp: {
           from: { opacity: '0', transform: 'translateY(30px)' },
